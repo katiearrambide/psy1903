@@ -1,3 +1,5 @@
+let experiment = 'Stroop';
+
 let welcomeMessage = `
 Welcome to our ` + experiment + `experiment.
 Please read the instructions carefully
@@ -5,7 +7,7 @@ Please read the instructions carefully
 console.log(welcomeMessage);
 
 // Define a variable to hold our experiment name
-let experiment = 'Stroop';
+
 console.log(typeof experiment); // string
 console.log(experiment.charAt(0)); // 'S'
 
@@ -30,3 +32,10 @@ let correct = true;
 console.log(typeof correct);
 
 console.log(10 > 15); // false
+
+
+let response1 = prompt('What is 5 + 3?');
+console.log(response1);
+
+let response2 = prompt('what is 5 + 5?');
+console.log(response2);
