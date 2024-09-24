@@ -23,18 +23,37 @@
 
 //Question 5
 
-let results = [];
+//let results = [];
 
-function getWordLengths(words) {
+//function getWordLengths(words) {
+//for (let word of words) {
+//results.push(word.length)
+//}
+// return (results);
+//}
+
+
+//let words = ['apple', 'banana', 'cherry', 'pear', 'grape'];
+
+//console.log(getWordLengths(words));
+
+// Question 6
+
+
+
+function getLongestWord(words) {
+    let longestWord = ''
     for (let word of words) {
-        results.push(word.length)
+        if (word.length > longestWord.length) {
+            longestWord = word
+        }
+
     }
-    return (results);
+    return longestWord
 }
 
 
 let words = ['apple', 'banana', 'cherry', 'pear', 'grape'];
 
-console.log(getWordLengths(words));
 
-
+console.log(getLongestWord(words));
