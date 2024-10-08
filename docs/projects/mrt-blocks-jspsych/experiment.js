@@ -10,7 +10,7 @@ let welcomeTrial = {
     <h1>Welcome to the Math Response Time Task</h1>
     <p>In this experiment, you will be shown a series of math questions.</p>
     <p>Please answer as quickly and accurately as possible.</p>
-    <p>Press SPACE to begin</p>
+    <p>Press <span class='key'>SPACE</span> to begin</p>
     `,
     choices: [' ']
 
@@ -48,8 +48,8 @@ for (let i = 0; i < blocks.length; i++) {
 
         let mathResponse = {
             type: jsPsychSurveyHtmlForm,
-            preamble: `<p>What is ${num1} + ${num2}?</p>`,
-            html: `<p><input type='text' name='answer' id='answer'></p>`,
+            preamble: `<p> <span class= 'equation'>What is ${num1} </span> + <span class= 'equation'>${num2}?</span></p>`,
+            html: `<p><input type='text'name='answer' id='answer'></p>`,
             autofocus: 'answer',
             button_label: 'Submit Answer',
             data: {
