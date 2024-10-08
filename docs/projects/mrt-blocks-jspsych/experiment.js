@@ -18,6 +18,28 @@ let welcomeTrial = {
 
 timeline.push(welcomeTrial);
 
+
+// questionairre using likert-scale
+var likert_scale = [
+    "Strongly Disagree",
+    "Disagree",
+    "Neutral",
+    "Agree",
+    "Strongly Agree"
+];
+
+let questionnaire = {
+    type: jsPsychSurveyLikert,
+    questions: [
+        { prompt: "I enjoy solving math problems.", name: 'prompt1', labels: likert_scale },
+        { prompt: "I find math easy.", name: 'prompt2', labels: likert_scale },
+
+    ],
+    randomize_question_order: true
+}
+
+timeline.push(questionnaire);
+
 // make 3 blocks
 
 let blocks = [
@@ -48,7 +70,7 @@ for (let i = 0; i < blocks.length; i++) {
 
         let mathResponse = {
             type: jsPsychSurveyHtmlForm,
-            preamble: `<p> <span class= 'equation'>What is ${num1} </span> + <span class= 'equation'>${num2}?</span></p>`,
+            preamble: `<p>What is<span class='equation'> ${num1} </span> + <span class= 'equation'>${num2}?</span></p>`,
             html: `<p><input type='text'name='answer' id='answer'></p>`,
             autofocus: 'answer',
             button_label: 'Submit Answer',

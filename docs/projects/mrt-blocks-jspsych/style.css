@@ -21,8 +21,8 @@ h1 {
 
 .jspsych-display-element input[type=text] {
     font-size: 36px;
-    /* Sets the font size to 36px */
+
     text-align: center;
-    /* Centers the text inside the input box */
+
     width: 100px;
 }
