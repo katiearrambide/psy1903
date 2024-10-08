@@ -1,0 +1,28 @@
+.key {
+    border: 1px solid black;
+    border-radius: 2px;
+    display: inline-block;
+    padding: 5px 10px;
+}
+
+h1 {
+    background-color: teal;
+    color: white;
+    font-family: Georgia;
+    border-radius: 5px;
+    padding: 5px;
+
+}
+
+.equation {
+    background-color: yellow;
+    font-size: 36px;
+}
+
+.jspsych-display-element input[type=text] {
+    font-size: 36px;
+    /* Sets the font size to 36px */
+    text-align: center;
+    /* Centers the text inside the input box */
+    width: 100px;
+}
