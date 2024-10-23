@@ -2,7 +2,7 @@
 
 
 ## AI Prompts
-+ what does counter do
++ what does counter do in javascript
 
 ## Outside Sites
 + none
