@@ -6,15 +6,13 @@ for (let i = 0; i < 3; i++) {
     let num2 = getRandomNumber(1, 10);
     let answer = (num1 + num2);
 
-    conditions.push({ 'num1': num1, 'num2': num2, 'answer': answer });
+    conditions.push({ 'num1': num1, 'num2': num2, 'answer': answer, });
 }
 
-
-// Output the resulting conditions array to make sure it is set up correctly
+//Output the resulting conditions array to make sure it is set up correctly
 console.log(conditions);
 
-
-// generate random 1-10
+//generate random 1-10
 function getRandomNumber(min, max) {
     return Math.floor(Math.random() * (max - min + 1)) + min;
 }

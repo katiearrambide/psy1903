@@ -13,8 +13,8 @@ console.log(experiment.charAt(0)); // 'S'
 
 
 let trialCountMax = 20;
-console.log(trialCountMax.charAt(0));
-console.log(typeof trialCountMax); // number
+//console.log(trialCountMax.charAt(0));
+//console.log(typeof trialCountMax); // number
 
 // TODO: randomize colors
 let colors = ['red', 'green', 'blue'];
@@ -39,3 +39,12 @@ console.log(response1);
 
 let response2 = prompt('what is 5 + 5?');
 console.log(response2);
+
+
+console.log("Hello World");
+
+
+let courseName = 'Programming for Psychologists';
+console.log(courseName.toUpperCase());
+console.log(courseName.indexOf("Psychologists"));
+console.log(courseName.replace("Programming", "Coding"));
