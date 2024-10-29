@@ -1,0 +1,55 @@
+.key {
+    border: 1px solid black;
+    border-radius: 2px;
+    display: inline-block;
+    padding: 5px 10px;
+}
+
+h1 {
+    color: black;
+    font-family: Georgia;
+}
+
+.instruction {
+    background-color: lightgrey;
+    color: black;
+    font-family: Arial;
+    border-radius: 10px;
+    padding: 20px 40px;
+    text-align: left;
+}
+
+.red {
+    color: red;
+}
+
+.green {
+    color: green;
+
+}
+
+.blue {
+    color: blue;
+
+}
+
+.loader {
+    width: 48px;
+    height: 48px;
+    border: 5px solid #000;
+    border-bottom-color: transparent;
+    border-radius: 50%;
+    display: inline-block;
+    box-sizing: border-box;
+    animation: rotation 1s linear infinite;
+}
+
+@keyframes rotation {
+    0% {
+        transform: rotate(0deg);
+    }
+
+    100% {
+        transform: rotate(360deg);
+    }
+}
