@@ -1,4 +1,6 @@
-let jsPsych = initJsPsych();
+let jsPsych = initJsPsych({
+    show_progress_bar: true
+});
 
 let timeline = [];
 
@@ -255,12 +257,14 @@ let debriefTrial = {
     `,
     choices: ['NO KEYS'],
     on_start: function () {
+
         let data = jsPsych.data
             .get()
             .filter({ collect: true })
             .ignore(['stimulus', 'plugin_version', 'collect'])
             .csv();
         console.log(data);
+        jsPsych.progressBar.progress = 1;
     }
 }
 timeline.push(debriefTrial);
