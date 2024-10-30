@@ -72,8 +72,8 @@ let resultsTrial = {
 
         let prefix = 'plugin-demo';
         let dataPipeExperimentId = 'xGrIMXyGYhic';
-        let forceOSFSave = false;
-        let participantId = getCurrentTimestamp();
+        let forceOSFSave = true;
+
         let fileName = prefix + '-' + participantId + '.csv';
 
         saveResults(fileName, results, dataPipeExperimentId, forceOSFSave).then(response => {
