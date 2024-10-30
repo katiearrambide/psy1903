@@ -71,9 +71,9 @@ let resultsTrial = {
 
         let prefix = 'plugin-demo';
         let dataPipeExperimentId = 'xGrIMXyGYhic';
-        let forceOSFSave = true;
+        let forceOSFSave = true:
 
-        let fileName = prefix + '-' + participantId + '.csv';
+            let fileName = prefix + '-' + participantId + '.csv';
 
         saveResults(fileName, results, dataPipeExperimentId, forceOSFSave).then(response => {
             jsPsych.finishTrial();
@@ -103,7 +103,5 @@ let debriefTrial = {
 }
 
 timeline.push(debriefTrial);
-
-
 
 jsPsych.run(timeline);
