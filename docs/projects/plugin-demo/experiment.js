@@ -58,7 +58,6 @@ let resultsTrial = {
     async: false,
     stimulus: `
         <h1>Please wait...</h1>
-        <span class='loader'></span>
         <p>We are saving the results of your inputs.</p>
         `,
     on_start: function () {
