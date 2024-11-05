@@ -11,7 +11,7 @@ let words = {
 // Your final experiment should show 36 words per block 
 // when developing your experiment you can reduce this number 
 // to expedite the process of testing the experiment
-let count = 4;
+let count = 36;
 
 
 // The following code will process the above information into a `conditions` array you 

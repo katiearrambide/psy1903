@@ -4,12 +4,21 @@ let jsPsych = initJsPsych({
 
 let timeline = [];
 
+//consent screen
+
+let consentTrial = {
+    type: jsPsychHtmlKeyboardResponse,
+    stimulus: `<p>This experiment is an educational exercise about learning to program and analyze a psychological experiment and not a “real” scientific experiment. No identifying information is collected, and data will not be shared beyond our class. If you agree to help out by completing the tasks and questionnaires, please press the <span class='key'>SPACE</span> key. Otherwise, you may close this tab. If you have any questions, please reach out to Dr. Garth Coombs (garthcoombs@fas.harvard.edu), one of the head instructors of PSY 1903: Programming for Psychological Scientists.</p>`,
+    choices: [' '],
+};
+timeline.push(consentTrial);
+
 // welcome screen
 
 let welcomeTrial = {
     type: jsPsychHtmlKeyboardResponse,
     stimulus: `
-    <h1>Welcome to the Emotional Stroop Task!</h1>
+    <h1>Welcome to the Rise or Fall Emotional Stroop Task!</h1>
     <p>In this experiment, you will complete the following three tasks:</p>
     <ul class='instruction'><li>In Task 1 you will be asked to describe an image. </li>
     <li>In Task 2 you will answer a brief set of questions.</li>
@@ -17,11 +26,7 @@ let welcomeTrial = {
     <p>Press <span class='key'>SPACE</span> to begin</p>
     `,
     choices: [' ']
-
-    //style questions see notepad
-
 };
-
 timeline.push(welcomeTrial);
 
 //priming task goes here
@@ -29,14 +34,12 @@ timeline.push(welcomeTrial);
 let images = ['failure', 'neutral', 'success']
 let randomIndex = getRandomNumber(0, 2)
 let image = images[randomIndex]
-
-
 let primingTrial = {
     type: jsPsychSurveyHtmlForm,
     preamble: `<p>Describe what you see in the image.</p>`,
     html: `
    
-   <img src='primeimages/${image}prime.png'>
+   <p><img src='primeimages/${image}prime.png'></p>
           <input name='responseInput' id='response' type='text'>`,
 
     autofocus: 'response',
@@ -51,15 +54,6 @@ let primingTrial = {
     }
 };
 timeline.push(primingTrial);
-
-
-
-
-function getRandomNumber(min, max) {
-    return Math.floor(Math.random() * (max - min + 1)) + min;
-}
-
-
 
 //questionnaire task
 
@@ -98,9 +92,7 @@ let questionnaire = {
         collect: true,
         trialType: 'questionnaire',
     }
-
 }
-
 timeline.push(questionnaire);
 
 //EST instructions
@@ -121,7 +113,6 @@ let estInstructions = {
 
 
 };
-
 timeline.push(estInstructions);
 
 //make 3 blocks--practice, emotionA, emotionB
@@ -146,7 +137,6 @@ for (let block of conditions) {
 
     timeline.push(blockIntroScreen);
 
-
     // Screen to display the word as the selected color
     //Listen r,g,b keys
 
@@ -168,13 +158,7 @@ for (let block of conditions) {
             },
             choices: ['r', 'g', 'b'],
             on_finish: function (data) {
-                if (data.response == trial.expectedResponse) {
-                    data.correct = true;
-                }
-                else {
-                    data.correct = false;
-                }
-
+                data.correct = data.response == trial.expectedResponse
             }
         }
         timeline.push(conditionTrial);
@@ -187,12 +171,9 @@ for (let block of conditions) {
 
         timeline.push(fixationTrial);
     }
-
-
 }
 
 //save results trial
-
 
 let resultsTrial = {
     type: jsPsychHtmlKeyboardResponse,
@@ -247,8 +228,6 @@ let resultsTrial = {
 }
 timeline.push(resultsTrial);
 
-///
-
 //debrief screen
 
 let debriefTrial = {
@@ -271,12 +250,10 @@ let debriefTrial = {
 }
 timeline.push(debriefTrial);
 
-
-//save results 
-
-
-
 jsPsych.run(timeline);
 
+function getRandomNumber(min, max) {
+    return Math.floor(Math.random() * (max - min + 1)) + min;
+}
 
 
