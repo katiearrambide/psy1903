@@ -38,6 +38,7 @@ for (column_name in column_names) {
 calculate_EST_dscore <- function(data) {
   #step 1 only select trials w rt > 300 and rt < 5000
   tmp <- data[data$rt > 300 & data$rt < 5000,]
+  tmp <- tmp[tmp$correct == TRUE,]
   
   #step 2 separate emotion and neutral trials
   
@@ -60,6 +61,8 @@ calculate_EST_dscore <- function(data) {
   
   return(list(emotionA_d_score = dscore1, emotionB_d_score = dscore2))
 }
+
+calculate_EST_dscore(est_data1)
 
 
 
@@ -90,28 +93,106 @@ i = 1
 for (file in files_list) {
   tmp <- read.csv(file)
   
-# Use read.csv to read in your file as a temporary data frame called tmp
-
-# Assign participant_ID as the basename of the file
-participant_ID <- tools::file_path_sans_ext(basename(file))
-
-# Isolate the participant_ID column for the current row number (i) and assign it to be the current participant_ID variable
-
-
-dScores[i,"participant_ID"] <- participant_ID
-
-# Using similar logic, isolate the d_score OR c("emotionA_d_score", "emotionB_d_score") column(s) for the current row number (i) and assign it to be the current d-score(s) by using our calculate_IAT_dscore or calculate_EST_dscore on the tmp data file
-
-dScores[i,c("emotionA_d_score","emotionB_d_score")] <- calculate_EST_dscore(tmp)
-
-# Remove the temporary data file tmp  
-
-rm(tmp)
-
-# Increase our row number variable i by one for the next iteration
-
-i <- i + 1
+  # Use read.csv to read in your file as a temporary data frame called tmp
+  
+  # Assign participant_ID as the basename of the file
+  participant_ID <- tools::file_path_sans_ext(basename(file))
+  
+  # Isolate the participant_ID column for the current row number (i) and assign it to be the current participant_ID variable
+  
+  
+  dScores[i,"participant_ID"] <- participant_ID
+  
+  
+  dScores[i, "whichPrime"] <- tmp[tmp$trialType == "prime", "whichPrime"]
+  
+  #make rt column numeric
+  
+  tmp$rt <- as.numeric(tmp$rt)
+  
+  # make correct column boolean
+  
+  tmp$correct <- as.logical(tmp$correct)
+  
+  #appropriate columns are factors--block, valence, color
+  
+  tmp$block <- as.factor(tmp$block)
+  tmp$valence <- as.factor(tmp$valence)
+  tmp$color <- as.factor(tmp$color)
+  
+  # Using similar logic, isolate the d_score OR c("emotionA_d_score", "emotionB_d_score") column(s) for the current row number (i) and assign it to be the current d-score(s) by using our calculate_IAT_dscore or calculate_EST_dscore on the tmp data file
+  
+  dScores[i,c("emotionA_d_score","emotionB_d_score")] <- calculate_EST_dscore(tmp)
+  
+  dScores[i,"questionnaire"] <- score_questionnaire(tmp)
+  
+  # Remove the temporary data file tmp  
+  
+  rm(tmp)
+  
+  # Increase our row number variable i by one for the next iteration
+  
+  i <- i + 1
 }
+
+dScores$whichPrime <- as.factor(dScores$whichPrime)
+
+str(dScores)
 
 ## Outside of the for loop, save the new dScores data frame using write.csv() into your data_cleaning/data subdirectory:
 write.csv(dScores,"~/Desktop/psy1903/stats/data_cleaning/data/participant_dScores.csv", row.names = FALSE)
+
+#### Questionnaire Scoring -----------------------------------------------------
+
+## Read in data file to a data frame called iat_test
+iat_test <- read.csv("~/Desktop/psy1903/stats/data_cleaning/data/my-iat-test-data.csv")
+
+## Extract questionnaire data
+
+json_data <- iat_test[iat_test$trialType == "Questionnaire","response"]
+
+## Use fromJSON to Convert from JSON to data frame
+
+questionnaire <- fromJSON(json_data)
+str(questionnaire)
+questionnaire <- as.data.frame(questionnaire)
+
+## Convert to numeric
+questionnaire <- as.data.frame(lapply(questionnaire, as.numeric))
+
+
+## Reverse score if necessary
+
+
+## Calculate mean or sum score
+score <- rowMeans(questionnaire, na.rm = TRUE)
+
+## Initiate function called score_questionnaire that accepts a single argument called `data`. Within this function...
+
+score_questionnaire <- function(data) {
+  
+## Extract questionnaire data cell
+  json_data <- data[data$trialType == "questionnaire", "response"]
+  
+
+## Use fromJSON to convert from JSON to data frame
+  
+  questionnaire <- fromJSON(json_data[1])
+  # str(questionnaire)
+  questionnaire <- as.data.frame(questionnaire)
+
+## Convert to numeric
+
+  questionnaire <- as.data.frame(lapply(questionnaire, as.numeric))
+  
+## Reverse score if necessary
+
+## Calculate & return questionnaire score (mean)
+  
+  score <- rowMeans(questionnaire, na.rm = TRUE)
+  
+  return(score)
+  
+}
+
+score_questionnaire(est_data1)
