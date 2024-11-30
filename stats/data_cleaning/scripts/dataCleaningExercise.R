@@ -196,3 +196,122 @@ score_questionnaire <- function(data) {
 }
 
 score_questionnaire(est_data1)
+
+write.csv(
+  dScores,
+  "~/Desktop/psy1903/stats/data_cleaning/data/participant_dScores.csv",
+  row.names = FALSE
+)
+
+dScores$whichPrime <- as.factor(dScores$whichPrime)
+
+anova_emotionA <- aov(emotionA_d_score ~ whichPrime, data = dScores)
+
+summary(anova_emotionA)
+
+
+tukey_result <- TukeyHSD(anova_emotionA)
+
+summary(tukey_result)
+
+class(dScores$whichPrime)
+levels(dScores$whichPrime)
+str(dScores)
+
+cor_result <- cor.test(dScores$emotionA_d_score, dScores$questionnaire, method = "pearson")
+cor_result
+
+hist(dScores$emotionA_d_score,
+     main = "Distribution of D-Scores",
+     xlab = "D-Scores",
+     ylab = "Frequency")
+
+library(ggplot2)
+
+ggplot(dScores, aes(x = emotionA_d_score)) +
+  geom_histogram(binwidth = 0.1,
+                 fill = "skyblue",
+                 color = "black") +
+
+labs(
+  title = "Distribution of D-Scores",
+     x = "D-Scores",
+     y = "Frequency")
++
+  theme_minimal()
+
+library(ggplot2)
+
+ggplot(dScores, aes(x = emotionA_d_score)) +
+  geom_histogram(binwidth = 0.1,
+                 fill = "skyblue",
+                 color = "black") +
+  labs(
+    title = "Distribution of D-Scores",
+    x = "D-Scores",
+    y = "Frequency"
+    ) +
+  theme_classic() +
+  facet_wrap(~whichPrime)
+
+library(ggplot2)
+
+ggplot(dScores, aes(x = whichPrime, y = emotionA_d_score, fill = whichPrime)) +
+  geom_boxplot() +
+  labs(
+    title = "Effect of Prime on D-Scores",
+    x = "Prime Condition",
+    y = "D-Scores"
+  ) +
+  scale_x_discrete(labels = c(
+    "failure" = "Failure",
+    "success" = "Success",
+    "neutral" = "Neutral"
+  )) +
+  theme_classic() +
+  theme(legend.position = "none")
+
+ggplot(dScores, aes(x = questionnaire, y = emotionA_d_score)) +
+  geom_point(color = "blue") +
+  geom_smooth(method = "lm", se = FALSE,
+              color = "pink", size = 1) +
+  labs(
+    title = "Correlation Between Questionnaire and D-Scores",
+    x = "Questionnaire",
+    y = "D-Scores"
+  ) +
+  theme_classic()
+  
+library(ggplot2)
+
+custom_theme <- theme(
+  plot.title = element_text(family = "Comic Sans MS", size = 20, color = "pink", face = "bold", hjust = 0.5),
+  plot.subtitle = element_text(family = "Comic Sans MS", size = 15, color = "lightpink", hjust = 0.5),
+  axis.title.x = element_text(family = "Comic Sans MS", size = 14, color = "purple"),
+  axis.title.y = element_text(family = "Comic Sans MS", size = 14, color = "purple"),
+  axis.text.x = element_text(family = "Comic Sans MS", size = 12, color = "purple"),
+  axis.text.y = element_text(family = "Comic Sans MS", size = 12, color = "purple"),
+  panel.background = element_rect(fill = "lavender", color = "pink"),
+  panel.grid.major = element_line(color = "pink", size = 0.5),
+  panel.grid.minor = element_line(color = "lightpink", size = 0.25)
+)
+  
+  
+  
+ggplot(dScores, aes(x = emotionA_d_score)) +
+    geom_histogram(binwidth = 0.1,
+                   fill = "skyblue",
+                   color = "purple") +
+    labs(
+      title = "Distribution of D-Scores",
+      x = "D-Scores",
+      y = "Frequency"
+    ) +
+    theme_classic() +
+    custom_theme +
+    facet_wrap(~whichPrime)
+  
+
+
+
+
