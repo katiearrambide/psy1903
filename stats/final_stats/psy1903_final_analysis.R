@@ -9,16 +9,15 @@ setwd("~/Desktop/psy1903/stats/final_stats")
 #### D-score Function --------------------------------
 
 calculate_EST_dscore <- function(data) {
-  tmp <- data[data$rt > 300 & data$rt < 5000,]
-  tmp <- tmp[tmp$correct == TRUE,]
+  tmp <- data[data$rt > 300 & data$rt < 5000 & data$correct == TRUE,]
   
   emotionA_trials <- tmp[tmp$valence == "emotionA", ]
   emotionB_trials <- tmp[tmp$valence == "emotionB", ]
   neutral_trials <- tmp[tmp$valence == "neutral", ]
   
-  emotionA_means <- mean(emotionA_trials$rt, na.omit = TRUE)
-  emotionB_means <- mean(emotionB_trials$rt, na.omit = TRUE)
-  neutral_means <- mean(neutral_trials$rt, na.omit = TRUE)
+  emotionA_means <- mean(emotionA_trials$rt, na.rm = TRUE)
+  emotionB_means <- mean(emotionB_trials$rt, na.rm = TRUE)
+  neutral_means <- mean(neutral_trials$rt, na.rm = TRUE)
   neutral_sd <- sd(neutral_trials$rt, na.rm = TRUE)
   
   dscore1 <- (emotionA_means - neutral_means) / neutral_sd 
@@ -39,6 +38,11 @@ score_questionnaire <- function(data) {
   
   questionnaire <- as.data.frame(lapply(questionnaire, as.numeric))
   
+  rev_items <- c("prompt4", "prompt10")
+  for (rev_item in rev_items) {
+    questionnaire[,rev_item] <- 4 - questionnaire[,rev_item]
+  }
+  
   score <- rowMeans(questionnaire, na.rm = TRUE)
   
   return(score)
@@ -46,11 +50,15 @@ score_questionnaire <- function(data) {
 }
 
 #### For Loop ------------------------------------------
+directory_path <- "~/Desktop/psy1903/osfstorage-archive"
 files_list <- list.files(path = directory_path, pattern = "\\.csv$", full.names = TRUE)
 
-dScores <- data.frame(matrix(nrow = length(files_list), ncol = 3))
 
-colnames(dScores) <- c("participant_ID", "emotionA_d_score", "emotionB_d_score")
+dScores <- data.frame(matrix(nrow = length(files_list), ncol = 5))
+
+
+colnames(dScores) <- c("participant_ID", "emotionA_d_score", "emotionB_d_score", "whichPrime", "questionnaire")
+
 i = 1
 
 for (file in files_list) {
@@ -78,6 +86,7 @@ for (file in files_list) {
   
   i <- i + 1
 }
+
 
 #### ANOVA -------------------------------------------
 
